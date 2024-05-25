@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://bou11cnsvyred"]
+
+[ext_resource type="PackedScene" uid="uid://bsbo41pehiolb" path="res://player/Player.tscn" id="1_g5364"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sivyq"]
+size = Vector2(2263.5, 62)
+
+[node name="World" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_g5364")]
+position = Vector2(262, 402)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(64, 318)
+rotation = 1.5708
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D2"]
+offset_left = -1680.0
+offset_top = -29.0
+offset_right = 596.0
+offset_bottom = 40.0
+color = Color(0, 0.354716, 0.355344, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(-539.25, 0)
+shape = SubResource("RectangleShape2D_sivyq")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(585, -241)
+rotation = 1.5708
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D3"]
+offset_left = -1159.0
+offset_top = -44.0
+offset_right = 1146.0
+offset_bottom = 29.0
+color = Color(0, 0.352941, 0.356863, 1)
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+shape = SubResource("RectangleShape2D_sivyq")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(559, 648)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+shape = SubResource("RectangleShape2D_sivyq")
+metadata/_edit_lock_ = true
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D4"]
+offset_left = -697.0
+offset_top = -27.0
+offset_right = 640.0
+offset_bottom = 29.0
+color = Color(0, 0.352941, 0.356863, 1)
