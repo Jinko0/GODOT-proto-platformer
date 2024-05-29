@@ -18,3 +18,8 @@ func jump():
 	elif player.get_wall_normal() == Vector2.RIGHT:
 		player.pushback_velocity = player.wall_pushback
 
+func dash():
+	## lors d'un dash depuis un mur on veux dash dans la direction opposée
+	player_input.last_direction = -player_input.last_direction
+	transitioned.emit(self,"DashState")
+

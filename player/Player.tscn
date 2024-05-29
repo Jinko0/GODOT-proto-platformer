@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://bsbo41pehiolb"]
 
-[ext_resource type="Texture2D" uid="uid://c3vtyd8otjies" path="res://icon.svg" id="1_5oere"]
 [ext_resource type="Script" path="res://player/Player.gd" id="1_tcbs5"]
+[ext_resource type="Texture2D" uid="uid://demy375bbi3d3" path="res://player.png" id="2_0dst4"]
 [ext_resource type="Script" path="res://global/states/StateDebugLabel.gd" id="2_t3fyk"]
 [ext_resource type="Script" path="res://player/states/PlayerStateMachine.gd" id="4_5jwfj"]
 [ext_resource type="Script" path="res://player/states/GroundState.gd" id="5_uiqrh"]
@@ -11,16 +11,18 @@
 [ext_resource type="Script" path="res://player/states/DashState.gd" id="8_gh1s0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d3u8x"]
-size = Vector2(124, 125)
+size = Vector2(73, 203)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_tcbs5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_5oere")
+texture = ExtResource("2_0dst4")
+hframes = 5
+vframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 0.5)
+position = Vector2(-5.5, 3.5)
 shape = SubResource("RectangleShape2D_d3u8x")
 
 [node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine")]
@@ -56,6 +58,7 @@ player = NodePath("../..")
 player_input = NodePath("../../Components/PlayerInputComponent")
 
 [node name="DashTimer" type="Timer" parent="PlayerStateMachine/DashState"]
+wait_time = 0.35
 one_shot = true
 
 [node name="Components" type="Node" parent="."]

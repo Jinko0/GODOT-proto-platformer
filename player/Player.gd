@@ -1,23 +1,23 @@
 extends CharacterBody2D
 class_name Player
 
-const move_speed = 600.0
-const jump_velocity = -800.0
+@export var move_speed = 600.0
+@export var jump_velocity = -800.0
 
 @onready var sprite = $Sprite2D
 
-var gravity = 3000.0
+@export var gravity = 3000.0
 
 var double_jump_is_available : bool = true
 
-var wall_friction : float = 500.0
+@export var wall_friction : float = 500.0
 
-var wall_pushback : float = 1500
+@export var wall_pushback : float = 1500
 var pushback_velocity : float
 var is_pushed : bool = false
 
 var dash_direction : float = 1
-var dash_speed : float = 1500
+@export var dash_speed : float = 1500
 
 func _physics_process(delta):
 	move_and_slide()
