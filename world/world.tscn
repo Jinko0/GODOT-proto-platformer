@@ -27,7 +27,7 @@ shape = SubResource("RectangleShape2D_sivyq")
 metadata/_edit_lock_ = true
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="."]
-position = Vector2(585, -241)
+position = Vector2(2158, -162)
 rotation = 1.5708
 
 [node name="ColorRect" type="ColorRect" parent="StaticBody2D3"]

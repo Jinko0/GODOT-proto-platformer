@@ -2,8 +2,6 @@ extends Node
 class_name StateMachine
 
 @export var initial_state : State
-# A déplacer plus tard
-#@export var animation_tree : AnimationTree
 
 var states : Dictionary = {}
 var current_state : State
@@ -13,9 +11,6 @@ func _ready():
 		if child is State:
 			states[child.name] = child
 			child.transitioned.connect(on_child_transition)
-			
-			# A deplacer plus tard
-			#child.playback = animation_tree["parameters/playback"]
 	
 	if initial_state:
 		initial_state.enter()

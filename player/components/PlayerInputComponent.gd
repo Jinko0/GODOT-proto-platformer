@@ -16,4 +16,7 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("dash"):
 		player_state.current_state.dash()
+	
+	if Input.is_action_just_pressed("block"):
+		player_state.current_state.block()
 

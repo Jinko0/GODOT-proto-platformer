@@ -10,7 +10,23 @@ func physics_update(delta):
 	if not player.is_on_wall():
 		transitioned.emit(self, "AirState")
 
+func enter():
+	### pour compenser le décalage sur la spritesheet ###
+	if player_input.last_direction == 1:
+		player.sprite.position.x += 20
+	elif player_input.last_direction == -1:
+		player.sprite.position.x -= 20
+	######
+	
+	playback.travel("wall_slide")
+
+func exit():
+	### pour compenser le décalage sur la spritesheet ###
+	player.sprite.position.x = 0
+	######
+	
 func jump():
+	playback.travel("jump_start")
 	player.velocity.y = player.jump_velocity
 	
 	if player.get_wall_normal() == Vector2.LEFT:
@@ -19,7 +35,8 @@ func jump():
 		player.pushback_velocity = player.wall_pushback
 
 func dash():
-	## lors d'un dash depuis un mur on veux dash dans la direction opposée
-	player_input.last_direction = -player_input.last_direction
-	transitioned.emit(self,"DashState")
-
+	if player.dash_is_available:
+		## lors d'un dash depuis un mur on veux dash dans la direction opposée
+		player_input.last_direction = -player_input.last_direction
+		player.sprite.flip_h = !player.sprite.flip_h
+		transitioned.emit(self,"DashState")
