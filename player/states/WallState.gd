@@ -6,6 +6,8 @@ func physics_update(delta):
 	
 	if not player.is_on_floor():
 		player.velocity.y += player.wall_friction * delta
+	else:
+		transitioned.emit(self, "GroundState")
 	
 	if not player.is_on_wall():
 		transitioned.emit(self, "AirState")
@@ -18,7 +20,7 @@ func enter():
 		player.sprite.position.x -= 20
 	######
 	
-	playback.travel("wall_slide")
+	playback.start("wall_slide")
 
 func exit():
 	### pour compenser le décalage sur la spritesheet ###

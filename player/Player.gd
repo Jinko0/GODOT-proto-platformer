@@ -12,7 +12,7 @@ var double_jump_is_available : bool = true
 
 @export var wall_friction : float = 500.0
 
-@export var wall_pushback : float = 1500
+@export var wall_pushback : float = 2500
 var pushback_velocity : float
 var is_pushed : bool = false
 
@@ -38,14 +38,15 @@ func _ready():
 	animation_tree.active = true
 
 func _physics_process(delta):
+	print(player_input.direction.x)
 	move_and_slide()
 
 	update_animation()
 
 func default_movement(input):
 	if not is_pushed:
-		if input.direction:
-			velocity.x = input.direction * move_speed
+		if input.direction.x:
+			velocity.x = input.direction.x * move_speed
 		else:
 			velocity.x = move_toward(velocity.x, 0, move_speed)
 			
@@ -72,7 +73,7 @@ func update_direction():
 		sprite.flip_h = false
 
 func update_animation():
-	animation_tree.set("parameters/move/blend_position", player_input.direction)
+	animation_tree.set("parameters/move/blend_position", player_input.direction.x)
 
 func _on_dash_cooldown_timeout():
 	dash_is_available = true
