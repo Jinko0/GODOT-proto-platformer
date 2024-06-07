@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://bou11cnsvyred"]
+
+[ext_resource type="Script" path="res://global/main.gd" id="1_c17gj"]
+[ext_resource type="PackedScene" uid="uid://b163digkaxfpn" path="res://level/level_1.tscn" id="2_2iehy"]
+[ext_resource type="Script" path="res://global/ProjectileManager.gd" id="4_65lqe"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_c17gj")
+
+[node name="level1" parent="." instance=ExtResource("2_2iehy")]
+
+[node name="ProjectileManager" type="Node2D" parent="."]
+script = ExtResource("4_65lqe")

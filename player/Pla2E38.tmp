@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://bsbo41pehiolb"]
+[gd_scene load_steps=68 format=3 uid="uid://bsbo41pehiolb"]
 
 [ext_resource type="Script" path="res://player/Player.gd" id="1_tcbs5"]
 [ext_resource type="Script" path="res://global/states/StateDebugLabel.gd" id="2_t3fyk"]
@@ -14,8 +14,6 @@
 [ext_resource type="Script" path="res://player/states/BlockState.gd" id="10_yblpb"]
 [ext_resource type="Script" path="res://player/states/AttackState.gd" id="12_q74yq"]
 [ext_resource type="Script" path="res://global/hitbox.gd" id="14_ecn7b"]
-[ext_resource type="Script" path="res://player/blockArea.gd" id="14_ki565"]
-[ext_resource type="Script" path="res://global/hurtbox.gd" id="15_gj41l"]
 
 [sub_resource type="Animation" id="Animation_7a4mx"]
 length = 0.001
@@ -1206,13 +1204,8 @@ height = 230.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ir6px"]
 size = Vector2(160.5, 138)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_loiic"]
-radius = 33.0
-height = 178.0
-
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
-collision_mask = 17
 script = ExtResource("1_tcbs5")
 move_speed = 900.0
 
@@ -1225,10 +1218,10 @@ vframes = 5
 frame = 11
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_nt7hs")
+texture = ExtResource("4_dpwki")
 flip_h = true
 hframes = 5
-vframes = 6
+vframes = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1312,14 +1305,10 @@ player_state = NodePath("../../PlayerStateMachine")
 zoom = Vector2(0.8, 0.8)
 
 [node name="blockArea" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 4
-script = ExtResource("14_ki565")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="blockArea"]
 position = Vector2(0, 7)
 shape = SubResource("CapsuleShape2D_0wout")
-disabled = true
 
 [node name="HitBox" type="Area2D" parent="."]
 position = Vector2(0, 31)
@@ -1331,19 +1320,8 @@ script = ExtResource("14_ecn7b")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(160, 0)
 shape = SubResource("RectangleShape2D_ir6px")
-disabled = true
-
-[node name="HurtBox" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 28
-script = ExtResource("15_gj41l")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(0, 18)
-shape = SubResource("CapsuleShape2D_loiic")
 
 [connection signal="timeout" from="DashDuration" to="PlayerStateMachine/DashState" method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
 [connection signal="timeout" from="BlockDuration" to="PlayerStateMachine/BlockState" method="_on_block_duration_timeout"]
 [connection signal="timeout" from="BlockCooldown" to="." method="_on_block_cooldown_timeout"]
-[connection signal="area_entered" from="blockArea" to="blockArea" method="_on_area_entered"]

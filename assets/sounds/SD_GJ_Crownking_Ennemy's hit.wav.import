@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dwl5j8le26wuy"
+path="res://.godot/imported/SD_GJ_Crownking_Ennemy's hit.wav-ed31ac02b65bba5c266d8a8476030117.sample"
+
+[deps]
+
+source_file="res://assets/sounds/SD_GJ_Crownking_Ennemy's hit.wav"
+dest_files=["res://.godot/imported/SD_GJ_Crownking_Ennemy's hit.wav-ed31ac02b65bba5c266d8a8476030117.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

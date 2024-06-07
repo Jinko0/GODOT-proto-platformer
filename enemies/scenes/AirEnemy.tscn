@@ -1,0 +1,205 @@
+[gd_scene load_steps=26 format=3 uid="uid://bjq3uy7kcp1w2"]
+
+[ext_resource type="Script" path="res://enemies/scripts/AirEnemy.gd" id="1_gw0pd"]
+[ext_resource type="Texture2D" uid="uid://btdlerx563pkr" path="res://assets/airEnemy.png" id="2_1ckg7"]
+[ext_resource type="Script" path="res://global/hurtbox.gd" id="3_m4os4"]
+[ext_resource type="Script" path="res://enemies/states/EnemyStateMachine.gd" id="4_f8ost"]
+[ext_resource type="Script" path="res://enemies/scenes/EnemyAirState.gd" id="5_ulwda"]
+[ext_resource type="Script" path="res://enemies/states/AirEnemyAttackState.gd" id="6_b2t82"]
+[ext_resource type="Script" path="res://global/states/StateDebugLabel.gd" id="7_slddi"]
+
+[sub_resource type="Animation" id="Animation_r17la"]
+resource_name = "fly"
+length = 4.00001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_dxcsr"]
+resource_name = "attack_start"
+length = 0.40001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [2, 3, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_txxdq"]
+resource_name = "attack"
+length = 0.20001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [7, 5]
+}
+
+[sub_resource type="Animation" id="Animation_tcuav"]
+resource_name = "attack_end"
+length = 0.40001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [7, 6, 3, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8sryg"]
+_data = {
+"attack": SubResource("Animation_txxdq"),
+"attack_end": SubResource("Animation_tcuav"),
+"attack_start": SubResource("Animation_dxcsr"),
+"fly": SubResource("Animation_r17la")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d55uv"]
+animation = &"attack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ibon3"]
+animation = &"attack_end"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ev0ke"]
+animation = &"attack_start"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wahsk"]
+animation = &"fly"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_cwq1r"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_t6nvd"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_c2fad"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6m3nn"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nadi1"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_mxph5"]
+states/attack/node = SubResource("AnimationNodeAnimation_d55uv")
+states/attack/position = Vector2(593, 187)
+states/attack_end/node = SubResource("AnimationNodeAnimation_ibon3")
+states/attack_end/position = Vector2(593, 263)
+states/attack_start/node = SubResource("AnimationNodeAnimation_ev0ke")
+states/attack_start/position = Vector2(593, 100)
+states/fly/node = SubResource("AnimationNodeAnimation_wahsk")
+states/fly/position = Vector2(391, 100)
+transitions = ["Start", "fly", SubResource("AnimationNodeStateMachineTransition_cwq1r"), "attack_start", "attack", SubResource("AnimationNodeStateMachineTransition_t6nvd"), "fly", "attack_start", SubResource("AnimationNodeStateMachineTransition_c2fad"), "attack", "attack_end", SubResource("AnimationNodeStateMachineTransition_6m3nn"), "attack_end", "fly", SubResource("AnimationNodeStateMachineTransition_nadi1")]
+graph_offset = Vector2(-47.5785, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0ol1a"]
+radius = 55.0283
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uj64d"]
+radius = 56.0136
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5bakk"]
+radius = 530.332
+
+[node name="AirEnemy" type="CharacterBody2D" groups=["AirEnemy"]]
+z_index = -1
+position = Vector2(0, 30.7656)
+collision_layer = 8
+script = ExtResource("1_gw0pd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8sryg")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+active = false
+tree_root = SubResource("AnimationNodeStateMachine_mxph5")
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -129)
+texture = ExtResource("2_1ckg7")
+hframes = 3
+vframes = 3
+frame = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -60)
+shape = SubResource("CircleShape2D_0ol1a")
+
+[node name="AttackOrigin" type="Marker2D" parent="."]
+position = Vector2(0, -66.7656)
+
+[node name="ShootTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 6
+script = ExtResource("3_m4os4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, -60)
+shape = SubResource("CircleShape2D_uj64d")
+
+[node name="EnemyStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("4_f8ost")
+initial_state = NodePath("EnemyAirState")
+
+[node name="EnemyAirState" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("5_ulwda")
+enemy = NodePath("../..")
+
+[node name="AirEnemyAttackState" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("6_b2t82")
+enemy = NodePath("../..")
+
+[node name="PlayerDetection" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
+position = Vector2(0, -67)
+shape = SubResource("CircleShape2D_5bakk")
+
+[node name="Label" type="Label" parent="." node_paths=PackedStringArray("state_machine")]
+offset_left = -22.0
+offset_top = -175.0
+offset_right = 18.0
+offset_bottom = -148.0
+script = ExtResource("7_slddi")
+state_machine = NodePath("../EnemyStateMachine")
+metadata/_edit_use_anchors_ = true
+
+[connection signal="timeout" from="ShootTimer" to="EnemyStateMachine/AirEnemyAttackState" method="_on_shoot_timer_timeout"]
+[connection signal="body_exited" from="PlayerDetection" to="EnemyStateMachine/AirEnemyAttackState" method="_on_player_detection_body_exited"]

@@ -14,3 +14,6 @@ func dash():
 
 func block():
 	pass
+
+func attack():
+	pass

@@ -24,3 +24,6 @@ func block():
 	if player.block_is_available:
 		transitioned.emit(self,"BlockState")
 
+func attack():
+	transitioned.emit(self, "AttackState")
+

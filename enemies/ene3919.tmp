@@ -1,9 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8fhrvbty1tru"]
+[gd_scene load_steps=6 format=3 uid="uid://b8fhrvbty1tru"]
 
 [ext_resource type="Texture2D" uid="uid://c3vtyd8otjies" path="res://icon.svg" id="1_h55s7"]
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="1_tptvh"]
+[ext_resource type="Script" path="res://global/hurtbox.gd" id="3_owkb4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ql70h"]
+size = Vector2(124, 124)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pbi67"]
 size = Vector2(124, 124)
 
 [node name="Enemy" type="CharacterBody2D"]
@@ -19,5 +23,11 @@ shape = SubResource("RectangleShape2D_ql70h")
 
 [node name="ShootTimer" type="Timer" parent="."]
 autostart = true
+
+[node name="HurtBox" type="Area2D" parent="."]
+script = ExtResource("3_owkb4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("RectangleShape2D_pbi67")
 
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
