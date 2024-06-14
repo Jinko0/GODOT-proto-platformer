@@ -21,6 +21,10 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("block"):
 		player_state.current_state.block()
 		
-	if Input.is_action_just_pressed("attack"):
+	if Input.is_action_pressed("attack"):
 		player_state.current_state.attack()
+	
+	if Input.is_action_just_released("attack"):
+		player_state.current_state.stop_attack()
+
 

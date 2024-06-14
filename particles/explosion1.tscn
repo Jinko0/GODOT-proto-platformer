@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://ci7o46spt3k07"]
+
+[ext_resource type="Script" path="res://particles/free_particle.gd" id="1_2pe8g"]
+
+[sub_resource type="Gradient" id="Gradient_sbk38"]
+colors = PackedColorArray(0.98, 0.3822, 0.511723, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7xlqb"]
+gradient = SubResource("Gradient_sbk38")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2mm5o"]
+particle_flag_disable_z = true
+angle_max = 180.0
+spread = 180.0
+initial_velocity_min = 500.0
+initial_velocity_max = 500.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 50.0
+linear_accel_max = 50.0
+scale_max = 10.0
+color = Color(0.955453, 0.887093, 0.447983, 1)
+color_ramp = SubResource("GradientTexture1D_7xlqb")
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+emitting = false
+amount = 15
+process_material = SubResource("ParticleProcessMaterial_2mm5o")
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+script = ExtResource("1_2pe8g")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

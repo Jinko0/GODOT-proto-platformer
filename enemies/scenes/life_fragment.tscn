@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cr56oblkshnqb"]
+
+[ext_resource type="PackedScene" uid="uid://bs7t8ddb8no1u" path="res://particles/eclatdevie.tscn" id="1_bslxm"]
+[ext_resource type="Script" path="res://enemies/scripts/life_fragment.gd" id="1_jsqit"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hc4rg"]
+radius = 45.0111
+
+[node name="Life_fragment" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_jsqit")
+
+[node name="GPUParticles2D" parent="." instance=ExtResource("1_bslxm")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-12, -4)
+shape = SubResource("CircleShape2D_hc4rg")
+metadata/_edit_lock_ = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

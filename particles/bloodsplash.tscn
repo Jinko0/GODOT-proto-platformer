@@ -1,0 +1,63 @@
+[gd_scene load_steps=11 format=3 uid="uid://2woxiah2mboy"]
+
+[ext_resource type="Texture2D" uid="uid://hh8occ6isxeo" path="res://assets/particulesChristo/sprite Conso Life  low.png" id="1_5dl2a"]
+[ext_resource type="Script" path="res://particles/free_particle.gd" id="2_wu1qr"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_m7p5i"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 3
+particles_anim_loop = true
+
+[sub_resource type="Curve" id="Curve_mqjyn"]
+_data = [Vector2(0.00593472, 1), 0.0, 0.0, 0, 0, Vector2(0.534125, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_y8b2y"]
+curve = SubResource("Curve_mqjyn")
+
+[sub_resource type="Gradient" id="Gradient_rfjlj"]
+offsets = PackedFloat32Array(0.00323625, 0.0711974)
+colors = PackedColorArray(1, 1, 1, 1, 0.903026, 0.0700053, 0.0654894, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_pebbi"]
+gradient = SubResource("Gradient_rfjlj")
+
+[sub_resource type="Curve" id="Curve_5la4s"]
+max_value = 3.0
+_data = [Vector2(0.00296736, 0.679113), 0.0, 0.0, 0, 0, Vector2(0.545994, 0.0192533), 0.0, 0.0, 0, 0, Vector2(0.768546, 0), 0.0, 0.0, 0, 0, Vector2(0.994065, 1.04317), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_qxs3x"]
+curve = SubResource("Curve_5la4s")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b5tlb"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(20, 20, 1)
+angle_max = 180.0
+direction = Vector3(1, -1, 0)
+spread = 30.0
+initial_velocity_min = 600.0
+initial_velocity_max = 600.0
+gravity = Vector3(0, 1000, 0)
+scale_min = 0.2
+scale_max = 0.6
+scale_over_velocity_curve = SubResource("CurveTexture_qxs3x")
+color_ramp = SubResource("GradientTexture1D_pebbi")
+alpha_curve = SubResource("CurveTexture_y8b2y")
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+material = SubResource("CanvasItemMaterial_m7p5i")
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_b5tlb")
+texture = ExtResource("1_5dl2a")
+lifetime = 0.8
+one_shot = true
+speed_scale = 2.0
+explosiveness = 0.2
+script = ExtResource("2_wu1qr")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

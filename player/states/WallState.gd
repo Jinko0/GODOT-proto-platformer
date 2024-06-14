@@ -19,15 +19,17 @@ func enter():
 	elif player_input.last_direction == -1:
 		player.sprite.position.x -= 20
 	######
-	
+	player.slide_effect_instance.emitting = true
 	playback.start("wall_slide")
 
 func exit():
 	### pour compenser le décalage sur la spritesheet ###
 	player.sprite.position.x = 0
 	######
+	player.slide_effect_instance.emitting = false
 	
 func jump():
+	player.emit_particle_effect(player.jump_effect, player.global_position - Vector2(0, -70), get_tree().get_first_node_in_group("effect_manager"), true)
 	playback.travel("jump_start")
 	player.velocity.y = player.jump_velocity
 	

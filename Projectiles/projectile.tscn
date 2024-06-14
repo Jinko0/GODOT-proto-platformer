@@ -1,14 +1,42 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3p8wtgi0y66i"]
+[gd_scene load_steps=8 format=3 uid="uid://d3p8wtgi0y66i"]
 
 [ext_resource type="Script" path="res://Projectiles/projectile.gd" id="1_c7ukd"]
-[ext_resource type="Texture2D" uid="uid://c3vtyd8otjies" path="res://icon.svg" id="1_lnhvy"]
 [ext_resource type="Script" path="res://global/hitbox.gd" id="2_35nur"]
+[ext_resource type="Texture2D" uid="uid://cmrbnxxxto6j0" path="res://assets/projectile.png" id="3_hv4u1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ibgsf"]
+atlas = ExtResource("3_hv4u1")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dgjcb"]
+atlas = ExtResource("3_hv4u1")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pa8ea"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibgsf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dgjcb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_y8g8o"]
-radius = 7.0
+radius = 8.0
 
 [node name="Projectile" type="Node2D"]
+z_index = 10
 script = ExtResource("1_c7ukd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(29, -36)
+sprite_frames = SubResource("SpriteFrames_pa8ea")
+frame_progress = 0.511322
 
 [node name="HitBox" type="Area2D" parent="." groups=["projectile"]]
 collision_layer = 4
@@ -16,12 +44,8 @@ collision_mask = 2
 script = ExtResource("2_35nur")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(-1, 0)
 shape = SubResource("CircleShape2D_y8g8o")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(1, 0.000313379, 0.282391, 1)
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("1_lnhvy")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 

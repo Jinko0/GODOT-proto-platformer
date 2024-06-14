@@ -3,7 +3,7 @@ class_name Projectile
 
 @onready var visible_on_screen_notifier_2d = $VisibleOnScreenNotifier2D
 
-@export var speed : float = 200
+@export var speed : float = 500
 
 var enemy : Enemy
 var return_to_enemy = false

@@ -17,3 +17,6 @@ func block():
 
 func attack():
 	pass
+
+func stop_attack():
+	pass

@@ -1,0 +1,152 @@
+[gd_scene load_steps=10 format=3 uid="uid://cdwxinls5vtsp"]
+
+[ext_resource type="Script" path="res://menu/Menu.gd" id="1_4otl7"]
+[ext_resource type="Theme" uid="uid://b2ci38cbyv0d6" path="res://menu/menu.tres" id="2_f2pm4"]
+[ext_resource type="Script" path="res://menu/button.gd" id="3_pkgf8"]
+[ext_resource type="Texture2D" uid="uid://d3iue3qeyk4or" path="res://assets/background.png" id="4_e7tn7"]
+[ext_resource type="Texture2D" uid="uid://orlfewfd4fb7" path="res://menu/sprite Gemme low.png" id="5_g4o1n"]
+[ext_resource type="PackedScene" path="res://menu/rain.tscn" id="6_dc2is"]
+[ext_resource type="FontFile" uid="uid://dnt0kaik20p48" path="res://menu/Tiny5-Regular.ttf" id="7_d8j5t"]
+
+[sub_resource type="Animation" id="Animation_fhxeu"]
+resource_name = "title"
+length = 1.00005
+loop_mode = 1
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationPlayer/LineEdit:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(563.5, 194), Vector2(563.5, 200)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nl8kn"]
+_data = {
+"title": SubResource("Animation_fhxeu")
+}
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4otl7")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -28.0
+offset_right = -6.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2.09424, 2.03443)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="JOUER" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_f2pm4")
+text = "JOUER"
+script = ExtResource("3_pkgf8")
+
+[node name="QUITTER" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_f2pm4")
+text = "QUITTER"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -547.0
+offset_right = 848.0
+offset_bottom = 565.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.08, 1.08)
+texture = ExtResource("4_e7tn7")
+expand_mode = 1
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 73.0
+offset_top = 1008.0
+offset_right = 73.0
+offset_bottom = 1039.0
+grow_horizontal = 2
+scale = Vector2(1.60001, 1.60001)
+focus_mode = 0
+text = "A PIEDS NICKELES STUDIO'S GAME"
+max_length = 100
+editable = false
+flat = true
+
+[node name="SpriteGemmeLow" type="Sprite2D" parent="."]
+position = Vector2(57, 968)
+scale = Vector2(0.76, 0.76)
+texture = ExtResource("5_g4o1n")
+hframes = 3
+vframes = 4
+frame = 5
+
+[node name="SpriteGemmeLow2" type="Sprite2D" parent="."]
+position = Vector2(537, 968)
+scale = Vector2(0.76, 0.76)
+texture = ExtResource("5_g4o1n")
+hframes = 3
+vframes = 4
+frame = 5
+
+[node name="rain" parent="." instance=ExtResource("6_dc2is")]
+position = Vector2(-16, -64)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nl8kn")
+}
+autoplay = "title"
+
+[node name="LineEdit" type="LineEdit" parent="AnimationPlayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -396.5
+offset_top = 198.189
+offset_right = 396.5
+offset_bottom = 319.191
+grow_horizontal = 2
+scale = Vector2(1.0087, 1)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("7_d8j5t")
+theme_override_font_sizes/font_size = 100
+text = "The Crowned King"
+alignment = 1
+max_length = 20
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/JOUER" to="." method="_on_jouer_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/QUITTER" to="." method="_on_quitter_pressed"]

@@ -1,10 +1,13 @@
 extends PlayerState
 class_name DashState
 
+@export var dash_sound : AudioStreamPlayer
+
 func physics_update(delta):
 	player.dash_movement()
 
 func enter():
+	dash_sound.play()
 	playback.start("dash")
 	
 	player.dash_direction = player_input.last_direction

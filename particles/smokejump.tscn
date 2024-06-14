@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://cxuhenvxm2xiy"]
+
+[ext_resource type="Script" path="res://particles/free_particle.gd" id="1_0dbty"]
+
+[sub_resource type="Curve" id="Curve_2e8e4"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0.0509091, -295.618), 0.0, 0.0, 0, 0, Vector2(0.570909, -197.973), 0.0, 0.0, 0, 0, Vector2(0.752727, 87.9881), 0.0, 0.0, 0, 0, Vector2(0.898182, 360), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_5smws"]
+curve = SubResource("Curve_2e8e4")
+
+[sub_resource type="Gradient" id="Gradient_tpn0n"]
+offsets = PackedFloat32Array(0.59919, 1)
+colors = PackedColorArray(0.967611, 0.967611, 0.967611, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qjohc"]
+gradient = SubResource("Gradient_tpn0n")
+
+[sub_resource type="Curve" id="Curve_3jtex"]
+_data = [Vector2(0.0218182, 0.186289), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_4bde8"]
+curve = SubResource("Curve_3jtex")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jyoxw"]
+particle_flag_disable_z = true
+angle_max = 180.0
+angle_curve = SubResource("CurveTexture_5smws")
+inherit_velocity_ratio = 1.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+angular_velocity_min = 100.0
+angular_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 1000.0
+radial_accel_max = 1000.0
+tangential_accel_min = -500.0
+tangential_accel_max = -100.0
+scale_min = 40.0
+scale_max = 50.0
+scale_curve = SubResource("CurveTexture_4bde8")
+color = Color(0.662745, 0.662745, 0.662745, 0.0862745)
+color_ramp = SubResource("GradientTexture1D_qjohc")
+turbulence_enabled = true
+turbulence_noise_strength = 5.0
+turbulence_noise_scale = 1.0
+turbulence_noise_speed = Vector3(0, 100, 0)
+turbulence_noise_speed_random = 0.1
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_jyoxw")
+lifetime = 0.2
+one_shot = true
+speed_scale = 0.5
+explosiveness = 1.0
+randomness = 1.0
+script = ExtResource("1_0dbty")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

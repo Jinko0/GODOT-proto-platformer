@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c02cyige2owme"]
+[gd_scene load_steps=32 format=3 uid="uid://c02cyige2owme"]
 
 [ext_resource type="Script" path="res://enemies/scripts/GroundEnemy.gd" id="1_s60hf"]
 [ext_resource type="Texture2D" uid="uid://dupvaipbolukq" path="res://assets/groundEnemy.png" id="2_qjp8p"]
@@ -7,7 +7,39 @@
 [ext_resource type="Script" path="res://enemies/states/EnemyStateMachine.gd" id="4_hmdk5"]
 [ext_resource type="Script" path="res://enemies/states/RollState.gd" id="5_bv5n7"]
 [ext_resource type="Script" path="res://enemies/states/GroundEnemyAttackState.gd" id="6_1hf3r"]
-[ext_resource type="Script" path="res://global/states/StateDebugLabel.gd" id="7_jewar"]
+[ext_resource type="Script" path="res://enemies/states/EnemyHurtState.gd" id="9_5xgik"]
+[ext_resource type="AudioStream" uid="uid://dgji5jua4md1b" path="res://assets/sounds/SD_GJ_Crownking_Ennemy's attack pico.wav" id="9_jgpne"]
+
+[sub_resource type="Shader" id="Shader_hxvpm"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+uniform float hit_opacity = 0;
+
+void fragment(){
+ COLOR.rgb = texture(TEXTURE, UV).rgb * (1.0 - hit_opacity) + vec3(1,1,1) * hit_opacity;
+ COLOR.a = texture(TEXTURE, UV).a ;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i6lgj"]
+resource_local_to_scene = true
+shader = SubResource("Shader_hxvpm")
+shader_parameter/hit_opacity = 0.0
+
+[sub_resource type="Animation" id="Animation_nbgi6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/hit_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_3nv0a"]
 resource_name = "attack"
@@ -48,6 +80,61 @@ tracks/2/keys = {
 "values": [{
 "args": [],
 "method": &"switch_state_after_attack"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioStreamPlayer:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_xmctx"]
+resource_name = "hurt"
+length = 0.400003
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/hit_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EnemyStateMachine/EnemyHurtState")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["EnemyRollState"],
+"method": &"switch_state_after_take_hit"
 }]
 }
 
@@ -109,13 +196,18 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jmf12"]
 _data = {
+"RESET": SubResource("Animation_nbgi6"),
 "attack": SubResource("Animation_3nv0a"),
+"hurt": SubResource("Animation_xmctx"),
 "roll_left": SubResource("Animation_53gvp"),
 "roll_right": SubResource("Animation_daa71")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_865t6"]
 animation = &"attack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w3e5t"]
+animation = &"hurt"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_265rm"]
 animation = &"roll_left"
@@ -139,13 +231,21 @@ advance_mode = 2
 switch_mode = 2
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0lhwm"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_m3ayj"]
+switch_mode = 2
+advance_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_f1lpt"]
 states/Start/position = Vector2(201, 100)
 states/attack/node = SubResource("AnimationNodeAnimation_865t6")
 states/attack/position = Vector2(547, 100)
+states/hurt/node = SubResource("AnimationNodeAnimation_w3e5t")
+states/hurt/position = Vector2(366, 218)
 states/roll/node = SubResource("AnimationNodeBlendSpace1D_33726")
 states/roll/position = Vector2(366, 100)
-transitions = ["Start", "roll", SubResource("AnimationNodeStateMachineTransition_r6y4l"), "roll", "attack", SubResource("AnimationNodeStateMachineTransition_cn07a"), "attack", "roll", SubResource("AnimationNodeStateMachineTransition_5xatm")]
+transitions = ["Start", "roll", SubResource("AnimationNodeStateMachineTransition_r6y4l"), "roll", "attack", SubResource("AnimationNodeStateMachineTransition_cn07a"), "attack", "roll", SubResource("AnimationNodeStateMachineTransition_5xatm"), "roll", "hurt", SubResource("AnimationNodeStateMachineTransition_0lhwm"), "hurt", "roll", SubResource("AnimationNodeStateMachineTransition_m3ayj")]
 graph_offset = Vector2(-42.5703, 0)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8lxgp"]
@@ -157,12 +257,14 @@ size = Vector2(252, 173)
 [sub_resource type="CircleShape2D" id="CircleShape2D_5xxee"]
 radius = 61.0
 
-[node name="GroundEnemy" type="CharacterBody2D"]
+[node name="GroundEnemy" type="CharacterBody2D" node_paths=PackedStringArray("state_machine")]
 z_index = -1
 collision_layer = 8
 script = ExtResource("1_s60hf")
+state_machine = NodePath("EnemyStateMachine")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_i6lgj")
 rotation = 6.28319
 scale = Vector2(1.3, 1.3)
 texture = ExtResource("2_qjp8p")
@@ -231,12 +333,11 @@ enemy = NodePath("../..")
 script = ExtResource("6_1hf3r")
 enemy = NodePath("../..")
 
-[node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine")]
-offset_left = -19.0
-offset_top = -100.0
-offset_right = 21.0
-offset_bottom = -77.0
-script = ExtResource("7_jewar")
-state_machine = NodePath("../EnemyStateMachine")
+[node name="EnemyHurtState" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("9_5xgik")
+enemy = NodePath("../..")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_jgpne")
 
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

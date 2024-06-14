@@ -27,6 +27,7 @@ func exit():
 
 func jump():
 	if player.double_jump_is_available:
+		player.emit_particle_effect(player.jump_effect, player.global_position - Vector2(0, -70), get_tree().get_first_node_in_group("effect_manager"), true)
 		playback.start("jump_start")
 		player.velocity.y = player.jump_velocity
 		player.double_jump_is_available = false

@@ -1,0 +1,76 @@
+[gd_scene load_steps=7 format=3 uid="uid://cicbbom15gvry"]
+
+[ext_resource type="Texture2D" uid="uid://bqk276vgdoga7" path="res://assets/gem.png" id="1_3tyoh"]
+[ext_resource type="Script" path="res://level/Gem.gd" id="1_xvmpo"]
+[ext_resource type="PackedScene" uid="uid://p1vsm6uoival" path="res://particles/gemmeeffect.tscn" id="3_c6c0s"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_31o47"]
+radius = 34.0
+height = 102.667
+
+[sub_resource type="Animation" id="Animation_nk5jx"]
+resource_name = "idle"
+length = 4.00001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area2D/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 2, 2.1, 2.2, 2.3, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 0, 1, 2, 3, 4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -10), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tb2ka"]
+_data = {
+"idle": SubResource("Animation_nk5jx")
+}
+
+[node name="Gem" type="Node2D"]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_xvmpo")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+position = Vector2(9.33333, -107.333)
+texture = ExtResource("1_3tyoh")
+hframes = 4
+vframes = 4
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -24.6667)
+shape = SubResource("CapsuleShape2D_31o47")
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Area2D"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_tb2ka")
+}
+autoplay = "idle"
+
+[node name="GPUParticles2D" parent="." instance=ExtResource("3_c6c0s")]
+position = Vector2(-5.06639e-07, -36)
+scale = Vector2(0.7, 0.7)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

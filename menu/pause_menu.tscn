@@ -1,0 +1,118 @@
+[gd_scene load_steps=12 format=3 uid="uid://cmq1mpqwrc6by"]
+
+[ext_resource type="Shader" path="res://menu/pause_menu.gdshader" id="1_50c6q"]
+[ext_resource type="Script" path="res://menu/pause_menu.gd" id="1_n5cil"]
+[ext_resource type="Script" path="res://menu/button.gd" id="2_j75nu"]
+[ext_resource type="FontFile" uid="uid://dnt0kaik20p48" path="res://menu/Tiny5-Regular.ttf" id="2_py0ae"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dpmx8"]
+shader = ExtResource("1_50c6q")
+shader_parameter/amount = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_svc7a"]
+bg_color = Color(0.309264, 0.687479, 0.485006, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20s4j"]
+bg_color = Color(0.309804, 0.686275, 0.486275, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+shadow_color = Color(1, 1, 1, 0.6)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hxcf7"]
+bg_color = Color(0.921956, 0.34655, 0.723524, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+shadow_color = Color(1, 1, 1, 0.6)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p263h"]
+bg_color = Color(0.309804, 0.686275, 0.486275, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s2fcw"]
+bg_color = Color(0.309804, 0.686275, 0.486275, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+shadow_color = Color(1, 1, 1, 0.6)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qr085"]
+bg_color = Color(0.868067, 0.361702, 0.745169, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+shadow_color = Color(1, 1, 1, 0.6)
+shadow_size = 5
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(2.36, 2.36)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_n5cil")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_dpmx8")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(48.16, 27.4)
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 3.0
+offset_right = 777.0
+offset_bottom = 444.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Reprendre" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_py0ae")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_svc7a")
+theme_override_styles/hover = SubResource("StyleBoxFlat_20s4j")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hxcf7")
+text = "REPRENDRE"
+script = ExtResource("2_j75nu")
+
+[node name="Quitter" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_py0ae")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_p263h")
+theme_override_styles/hover = SubResource("StyleBoxFlat_s2fcw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qr085")
+text = "QUITTER"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Reprendre" to="." method="_on_reprendre_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Quitter" to="." method="_on_quitter_pressed"]

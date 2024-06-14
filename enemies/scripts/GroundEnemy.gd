@@ -10,19 +10,18 @@ class_name GroundEnemy
 
 @export var speed : float = 200
 
-var direction = 1
 var playback : AnimationNodeStateMachinePlayback
 
-func _ready():
+var direction = 1
+
+func enemy_is_ready():
 	animation_tree.active = true
 	playback = animation_tree["parameters/playback"]
 
 func _process(delta):
 	animation_tree.set("parameters/move/blend_position", direction)
 
-	if health <= 0:
-		queue_free()
-
+	check_if_enemy_is_dead()
 
 func _physics_process(delta):
 	move_and_slide()

@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var returned_projectile_speed = 400
+@export var returned_projectile_speed = 800
 
 func _on_area_entered(area):
 	if area.is_in_group("projectile"):
